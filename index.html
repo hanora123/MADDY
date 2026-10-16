@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#101311">
+    <title>Gran Loco Studio | Prompt Atelier</title>
+    <meta name="description" content="Compose vivid image prompts and collaborate with the Gran Loco creative assistant.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/app.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="Gran Loco Studio home">
+        <span class="brand-mark" aria-hidden="true">GL</span>
+        <span class="brand-name">GRAN LOCO <i>STUDIO</i></span>
+      </a>
+      <div class="topbar-right">
+        <span class="edition"><span class="status-dot"></span> CREATIVE COMMAND CENTER</span>
+        <button class="assistant-toggle" id="assistant-toggle" type="button" aria-expanded="false" aria-controls="assistant-panel">
+          <span aria-hidden="true">✳</span> Ask about prompts
+        </button>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-photo" aria-hidden="true"></div>
+        <div class="hero-shade" aria-hidden="true"></div>
+        <div class="hero-copy">
+          <p class="eyebrow"><span>ISSUE 01</span><span class="eyebrow-rule"></span> THE IMAGE-MAKING PLAYBOOK</p>
+          <h1 id="hero-title">Make the frame<br><em>feel something.</em></h1>
+          <p class="hero-description">A considered library of visual commands for the images you can already see in your head.</p>
+          <div class="hero-meta"><span><strong id="command-total">48</strong> commands</span><span><strong>12</strong> disciplines</span><span>Built for your imagination <b>↗</b></span></div>
+        </div>
+        <div class="hero-caption"><span>FIG. 01</span> GOLDEN HOUR, SOMEWHERE IN THE CITY</div>
+      </section>
+
+      <section class="workbench" aria-label="Prompt command library">
+        <aside class="rail">
+          <div class="rail-heading"><span>01 / INDEX</span><span id="category-count">12 FIELDS</span></div>
+          <nav class="category-list" id="category-list" aria-label="Command categories"></nav>
+          <div class="rail-note"><span class="note-symbol">✳</span><p>One good detail can change the whole image. Start with a feeling.</p></div>
+        </aside>
+
+        <div class="library">
+          <div class="library-head">
+            <div>
+              <p class="eyebrow muted">THE COMMAND LIBRARY</p>
+              <h2 id="library-title">Choose your ingredients<span>.</span></h2>
+              <p class="library-subtitle" id="library-subtitle">Small creative decisions. A more intentional image.</p>
+            </div>
+            <label class="search-box"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Find a detail..." aria-label="Search commands"><kbd>/</kbd></label>
+          </div>
+          <div class="library-controls">
+            <div class="platform-switch" role="group" aria-label="Filter prompts by platform">
+              <button class="platform-option active" type="button" data-platform="all" aria-pressed="true">All</button>
+              <button class="platform-option" type="button" data-platform="chatgpt" aria-pressed="false">ChatGPT</button>
+              <button class="platform-option" type="button" data-platform="flow" aria-pressed="false">Flow</button>
+            </div>
+            <span class="platform-note" id="platform-note">IMAGE + VIDEO PROMPTS</span>
+          </div>
+          <div class="filter-line"><span id="result-count">48 COMMANDS</span><span>SELECT A COMMAND TO ADD IT TO YOUR PROMPT <b>＋</b></span></div>
+          <div class="command-groups" id="command-groups"></div>
+          <p class="empty-state" id="empty-state" hidden>No commands match that search. Try another word.</p>
+        </div>
+      </section>
+    </main>
+
+    <section class="prompt-dock" aria-label="Prompt composer">
+      <div class="dock-head">
+        <div class="dock-title"><span class="dock-index">02</span><div><span class="eyebrow muted">YOUR WORKING PROMPT</span><span class="selected-count" id="selected-count">0 details selected</span></div></div>
+        <div class="dock-actions"><button class="text-button" id="clear-prompt" type="button" disabled>Clear</button><button class="copy-button" id="copy-prompt" type="button" disabled><span aria-hidden="true">▣</span> Copy prompt</button></div>
+      </div>
+      <div class="selected-commands" id="selected-commands"><span class="placeholder">Pick commands from the library to begin composing.</span></div>
+      <textarea id="prompt-output" class="prompt-output" rows="2" aria-label="Composed prompt" placeholder="Your composed prompt will appear here..."></textarea>
+    </section>
+
+    <aside class="assistant-panel" id="assistant-panel" aria-label="Studio assistant" aria-hidden="true">
+      <div class="assistant-head">
+        <div class="assistant-title"><span class="assistant-mark">✳</span><div><strong>Studio assistant</strong><small>CREATIVE PARTNER · GROQ</small></div></div>
+        <button class="icon-button" id="assistant-close" type="button" aria-label="Close assistant">×</button>
+      </div>
+      <div class="chat-messages" id="chat-messages" aria-live="polite">
+        <div class="message assistant-message"><span class="message-label">STUDIO ASSISTANT</span><p>Ask what any command means, which prompts fit ChatGPT or Flow, or how to combine them into a stronger prompt.</p></div>
+        <div class="suggestion-list" id="suggestion-list">
+          <button type="button">Which commands are Flow-only?</button>
+          <button type="button">Explain the lighting commands</button>
+          <button type="button">Build a cinematic portrait prompt</button>
+        </div>
+      </div>
+      <form class="chat-form" id="chat-form">
+        <label class="sr-only" for="chat-input">Message the studio assistant</label>
+        <textarea id="chat-input" rows="2" placeholder="Describe the image in your head..." maxlength="4000"></textarea>
+        <div class="chat-form-foot"><span>AI can make mistakes. Refine the result.</span><button type="submit" id="send-message" aria-label="Send message"><span>↑</span></button></div>
+      </form>
+    </aside>
+    <button class="assistant-fab" id="assistant-fab" type="button" aria-expanded="false" aria-controls="assistant-panel">
+      <span aria-hidden="true">✳</span> Ask about prompts
+    </button>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

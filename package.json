@@ -1,0 +1,14 @@
+{
+  "name": "gran-loco-prompt-studio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^18.0.8",
+    "marked": "^18.1.1",
+    "sanitize-html": "^2.18.1"
+  }
+}
