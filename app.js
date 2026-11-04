@@ -18,6 +18,56 @@ const commandGroups = document.querySelector('#command-groups');
 const searchInput = document.querySelector('#search');
 const selectedCommands = new Set();
 const flowOnlyCommands = new Set(['motionblur', 'mist', 'wind', 'raindrops']);
+const commandImages = {
+  productphoto: '1523275335684-37898b6baf30',
+  heroobject: '1542291026-7eec264c27ff',
+  macrodetail: '1513364776144-60967b0f800f',
+  floating: '1503602642458-232111445657',
+  highangle: '1517248135467-4c7edcad34c4',
+  lowangle: '1487958449943-2429e8be8625',
+  dutchangle: '1511818966892-d7d671e672a2',
+  overhead: '1495474472287-4d71bcdd2085',
+  anamorphic: '1485846234645-a62644f84728',
+  '35mm': '1516035069371-29a1b244cc32',
+  '85mmportrait': '1524504388940-b1c1722653e1',
+  shallowdof: '1490750967868-88aa4486c946',
+  softbox: '1507473885765-e6ed057f782c',
+  goldenhour: '1470252649378-9c29740c9fa8',
+  rimlight: '1509114397022-ed747cca3f65',
+  chiaroscuro: '1500648767791-00dcc994a43e',
+  darkstudio: '1497366811353-6870744d04b2',
+  seamless: '1600210492486-724fe5c67fb0',
+  concrete: '1511818966892-d7d671e672a2',
+  desert: '1509316785289-025f5b846b35',
+  editorial: '1483985988355-763728e1935b',
+  filmstill: '1517604931442-7e0c8ed2963c',
+  analogfilm: '1519608487953-e999c86e7455',
+  minimalism: '1497366754035-f200968a6e72',
+  monochrome: '1490481651871-ab68de25d43d',
+  pastels: '1490750967868-88aa4486c946',
+  tealorange: '1510812431401-41d2bd2722f3',
+  earthtones: '1500534314209-a25ddb2bd429',
+  ruleofthirds: '1487958449943-2429e8be8625',
+  negative: '1497366216548-37526070297c',
+  symmetry: '1517248135467-4c7edcad34c4',
+  leadinglines: '1511818966892-d7d671e672a2',
+  candid: '1500648767791-00dcc994a43e',
+  beauty: '1534528741775-53994a69daeb',
+  environmental: '1517841905240-472988babdf9',
+  silhouette: '1519681393784-d120267933ba',
+  brushedmetal: '1523275335684-37898b6baf30',
+  velvet: '1503342217505-b0a15ec3261c',
+  glass: '1513519245088-0e12902e5a38',
+  papergrain: '1455390582262-044cdead277a',
+  motionblur: '1503376780353-7e6692767b70',
+  mist: '1448375240586-882707db888b',
+  wind: '1515886657613-9f3515b0c78f',
+  raindrops: '1500375592092-40eb2168fd21',
+  doubleexposure: '1524504388940-b1c1722653e1',
+  surreal: '1500530855697-b586d89ba3ee',
+  prismatic: '1518837695005-2083093ee35b',
+  fracturelight: '1494438639946-1ebd1d20bf85',
+};
 let activeCategory = 'all';
 let activePlatform = 'all';
 let chatHistory = [];
@@ -65,7 +115,8 @@ function renderCommands() {
   commandGroups.innerHTML = filteredCategories.map((category) => `<section class="command-group"><div class="group-heading"><h3><span>${category.mark}</span>${category.name}</h3><span>${String(category.commands.length).padStart(2, '0')} COMMANDS</span></div><div class="command-grid">${category.commands.map(([name, description]) => {
     const platforms = platformsFor(name);
     const labels = platforms.map((platform) => `<span class="command-platform-tag">${platform === 'chatgpt' ? 'ChatGPT' : 'Flow'}</span>`).join('');
-    return `<button class="command-card${selectedCommands.has(name) ? ' selected' : ''}" type="button" data-command="${name}" aria-pressed="${selectedCommands.has(name)}"><span class="command-card-top"><span class="command-name">${name}</span><span class="command-add" aria-hidden="true">${selectedCommands.has(name) ? '✓' : '+'}</span></span><span class="command-platform-labels">${labels}</span><span class="command-description">${description}</span></button>`;
+    const imageUrl = `https://images.unsplash.com/photo-${commandImages[name]}?auto=format&fit=crop&w=560&q=65`;
+    return `<button class="command-card${selectedCommands.has(name) ? ' selected' : ''}" type="button" data-command="${name}" aria-pressed="${selectedCommands.has(name)}"><img class="command-image" src="${imageUrl}" alt="" aria-hidden="true" loading="lazy" decoding="async"><span class="command-card-top"><span class="command-name">${name}</span><span class="command-add" aria-hidden="true">${selectedCommands.has(name) ? '✓' : '+'}</span></span><span class="command-platform-labels">${labels}</span><span class="command-description">${description}</span></button>`;
   }).join('')}</div></section>`).join('');
 }
 

@@ -95,16 +95,21 @@ button { color: inherit; }
 .group-heading h3 span { color: var(--coral); font: 10px var(--mono); margin-right: 10px; }
 .group-heading > span { color: var(--dim); font-size: 9px; }
 .command-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-.command-card { min-height: 108px; border: 1px solid var(--line); background: rgba(255,255,255,.018); padding: 12px 13px; text-align: left; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; gap: 8px; transition: background .18s ease, border-color .18s ease, transform .18s ease; }
-.command-card:hover { transform: translateY(-2px); background: rgba(23,104,255,.06); border-color: rgba(23,104,255,.48); }
+.command-card { position: relative; isolation: isolate; overflow: hidden; min-height: 108px; border: 1px solid var(--line); background: var(--surface); padding: 12px 13px; text-align: left; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; gap: 8px; transition: background .18s ease, border-color .18s ease, transform .18s ease; }
+.command-card::before { position: absolute; z-index: 1; inset: 0; background: linear-gradient(90deg, rgba(5,8,12,.87), rgba(5,8,12,.49)), linear-gradient(0deg, rgba(5,8,12,.7), transparent 75%); content: ""; pointer-events: none; }
+.command-image { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .48; transition: opacity .2s ease, transform .35s ease; }
+.command-card > :not(.command-image) { position: relative; z-index: 2; }
+.command-card:hover { transform: translateY(-2px); background: var(--surface); border-color: rgba(23,104,255,.65); }
+.command-card:hover .command-image { opacity: .68; transform: scale(1.06); }
 .command-card.selected { border-color: rgba(23,104,255,.7); background: rgba(23,104,255,.12); }
+.command-card.selected .command-image { opacity: .62; }
 .command-card-top { display: flex; justify-content: space-between; gap: 10px; }
 .command-name { color: var(--lime); font: 11px var(--mono); letter-spacing: .06em; text-transform: uppercase; }
 .command-add { color: var(--dim); font-size: 14px; line-height: 12px; }
 .selected .command-add { color: var(--lime); }
 .command-platform-labels { display: flex; flex-wrap: wrap; gap: 4px; }
 .command-platform-tag { padding: 2px 5px; border: 1px solid rgba(23,104,255,.26); color: #9abaff; font: 8px var(--mono); }
-.command-description { color: #9da49b; font-size: 10px; line-height: 1.6; }
+.command-description { color: #c3ccda; font-size: 10px; line-height: 1.6; text-shadow: 0 1px 5px rgba(0,0,0,.7); }
 .empty-state { color: var(--muted); padding: 30px 0; }
 .prompt-dock { position: fixed; z-index: 10; bottom: 16px; left: 50%; transform: translateX(-50%); width: min(1120px, calc(100% - 64px)); padding: 14px 18px 13px; background: rgba(8,13,22,.96); border: 1px solid rgba(23,104,255,.32); box-shadow: 0 18px 65px #0009; backdrop-filter: blur(20px); }
 .dock-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
