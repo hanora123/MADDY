@@ -68,10 +68,87 @@ const commandImages = {
   prismatic: '1518837695005-2083093ee35b',
   fracturelight: '1494438639946-1ebd1d20bf85',
 };
+const uiIcons = {
+  search: '<svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg>',
+  add: '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg>',
+  check: '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"></path></svg>',
+  arrow: '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"></path></svg>',
+  sparkle: '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m12 3 1.8 6.2L20 11l-6.2 1.8L12 19l-1.8-6.2L4 11l6.2-1.8L12 3Z"></path></svg>',
+};
 let activeCategory = 'all';
 let activePlatform = 'all';
 let chatHistory = [];
 let busy = false;
+
+function setBookingType(type) {
+  const appointment = type === 'appointment';
+  document.querySelectorAll('[data-booking-option]').forEach((option) => {
+    const active = option.dataset.bookingOption === type;
+    option.classList.toggle('active', active);
+    option.setAttribute('aria-pressed', String(active));
+  });
+  document.querySelector('#appointment-fields').hidden = !appointment;
+  document.querySelector('#project-fields').hidden = appointment;
+  document.querySelector('#appointment-date').required = appointment;
+  document.querySelector('#appointment-time').required = appointment;
+  document.querySelector('#project-type').required = !appointment;
+  document.querySelector('#project-brief').required = !appointment;
+  const notice = document.querySelector('#booking-notice');
+  notice.textContent = appointment
+    ? 'Appointment requests are a preview and are not connected to a studio inbox yet.'
+    : 'Project requests are a preview and are not connected to a studio inbox yet.';
+}
+
+function renderPage() {
+  const hash = window.location.hash;
+  const page = hash === '#ai' ? 'ai' : hash.startsWith('#booking') ? 'booking' : 'work';
+  document.querySelectorAll('.page-view').forEach((view) => {
+    view.hidden = view.id !== `${page}-page`;
+  });
+  document.querySelectorAll('[data-page-link]').forEach((link) => {
+    const active = link.dataset.pageLink === (page === 'ai' ? 'ai' : 'work');
+    link.classList.toggle('active', active);
+    if (active) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
+  });
+  document.querySelector('.prompt-dock').hidden = page !== 'ai';
+  document.querySelector('#assistant-fab').hidden = page !== 'ai' || document.querySelector('#assistant-panel').classList.contains('open');
+  document.title = page === 'ai'
+    ? 'Gran Loco AI | Prompt Studio'
+    : page === 'booking'
+      ? 'Book a Production | Gran Loco Studio'
+      : 'Gran Loco Studio | Visual Production';
+
+  if (page === 'booking') {
+    setBookingType(hash === '#booking-appointment' ? 'appointment' : 'project');
+  } else if (page !== 'ai') {
+    toggleAssistant(false);
+  }
+
+  if (['#portfolio', '#services', '#about'].includes(hash)) {
+    requestAnimationFrame(() => document.querySelector(hash)?.scrollIntoView());
+  } else {
+    window.scrollTo(0, 0);
+  }
+}
+
+document.querySelectorAll('[data-booking-option]').forEach((option) => {
+  option.addEventListener('click', () => {
+    window.location.hash = `booking-${option.dataset.bookingOption}`;
+  });
+});
+
+document.querySelector('#booking-form').addEventListener('submit', (event) => {
+  event.preventDefault();
+  const type = window.location.hash === '#booking-appointment' ? 'appointment' : 'project';
+  document.querySelector('#booking-notice').textContent = `Preview only — your ${type} request has not been sent. Connect a studio inbox to receive booking requests.`;
+});
+
+const appointmentDate = document.querySelector('#appointment-date');
+const today = new Date();
+appointmentDate.min = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
+window.addEventListener('hashchange', renderPage);
 
 function platformsFor(commandName) {
   return flowOnlyCommands.has(commandName) ? ['flow'] : ['chatgpt', 'flow'];
@@ -92,7 +169,8 @@ function renderCategories() {
   const allCount = categories.reduce((sum, category) => sum + category.commands.length, 0);
   document.querySelector('#command-total').textContent = allCount;
   document.querySelector('#result-count').textContent = `${allCount} COMMANDS`;
-  categoryList.innerHTML = `<button class="category-button active" data-category="all"><span class="category-mark">✳</span><span>All commands</span><span class="category-total">${allCount}</span></button>` + categories.map((category) => `<button class="category-button" data-category="${category.id}"><span class="category-mark">${category.mark}</span><span>${category.name}</span><span class="category-total">${category.commands.length}</span></button>`).join('');
+  document.querySelector('#category-count').textContent = categories.length;
+  categoryList.innerHTML = `<button class="category-button active" data-category="all"><span>All fields</span><span class="category-total">${allCount}</span></button>` + categories.map((category) => `<button class="category-button" data-category="${category.id}"><span>${category.name}</span><span class="category-total">${category.commands.length}</span></button>`).join('');
 }
 
 function renderCommands() {
@@ -106,7 +184,7 @@ function renderCommands() {
     .filter((category) => category.commands.length);
   const total = filteredCategories.reduce((sum, category) => sum + category.commands.length, 0);
   document.querySelector('#result-count').textContent = `${total} COMMAND${total === 1 ? '' : 'S'}`;
-  document.querySelector('#library-title').innerHTML = query ? 'Search the details<span>.</span>' : activeCategory === 'all' ? 'Choose your ingredients<span>.</span>' : `${categories.find((category) => category.id === activeCategory)?.name}<span>.</span>`;
+  document.querySelector('#library-title').innerHTML = query ? 'Search results <span>&amp; details.</span>' : activeCategory === 'all' ? 'Featured prompts <span>&amp; commands.</span>' : `${categories.find((category) => category.id === activeCategory)?.name} <span>&amp; commands.</span>`;
   const platformDescription = activePlatform === 'chatgpt' ? 'ChatGPT image prompts' : activePlatform === 'flow' ? 'Flow video prompts' : '';
   document.querySelector('#library-subtitle').textContent = query
     ? `${total} detail${total === 1 ? '' : 's'} for “${searchInput.value.trim()}”${platformDescription ? ` · ${platformDescription}` : ''}`
@@ -114,9 +192,11 @@ function renderCommands() {
   document.querySelector('#empty-state').hidden = total !== 0;
   commandGroups.innerHTML = filteredCategories.map((category) => `<section class="command-group"><div class="group-heading"><h3><span>${category.mark}</span>${category.name}</h3><span>${String(category.commands.length).padStart(2, '0')} COMMANDS</span></div><div class="command-grid">${category.commands.map(([name, description]) => {
     const platforms = platformsFor(name);
-    const labels = platforms.map((platform) => `<span class="command-platform-tag">${platform === 'chatgpt' ? 'ChatGPT' : 'Flow'}</span>`).join('');
-    const imageUrl = `https://images.unsplash.com/photo-${commandImages[name]}?auto=format&fit=crop&w=560&q=65`;
-    return `<button class="command-card${selectedCommands.has(name) ? ' selected' : ''}" type="button" data-command="${name}" aria-pressed="${selectedCommands.has(name)}"><img class="command-image" src="${imageUrl}" alt="" aria-hidden="true" loading="lazy" decoding="async"><span class="command-card-top"><span class="command-name">${name}</span><span class="command-add" aria-hidden="true">${selectedCommands.has(name) ? '✓' : '+'}</span></span><span class="command-platform-labels">${labels}</span><span class="command-description">${description}</span></button>`;
+    const labels = platforms.map((platform) => `<span class="command-platform-tag">${uiIcons.sparkle}${platform === 'chatgpt' ? 'ChatGPT' : 'Google Flow'}</span>`).join('');
+    const imageUrl = `https://images.unsplash.com/photo-${commandImages[name]}?auto=format&fit=crop&w=720&h=430&q=70`;
+    const selected = selectedCommands.has(name);
+    const categoryIndex = `${category.mark} / ${String(category.commands.findIndex(([commandName]) => commandName === name) + 1).padStart(2, '0')}`;
+    return `<button class="command-card${selected ? ' selected' : ''}" type="button" data-command="${name}" aria-pressed="${selected}" aria-label="${selected ? 'Remove' : 'Add'} ${name}: ${description}"><span class="command-card-media"><img class="command-image" src="${imageUrl}" alt="" aria-hidden="true" loading="lazy" decoding="async"><span class="command-platform-labels">${labels}</span><span class="command-card-select-icon">${selected ? uiIcons.check : uiIcons.add}</span><span class="command-card-index">${categoryIndex}</span></span><span class="command-card-body"><span class="command-name">${name}</span><span class="command-description">${description}</span></span><span class="command-card-footer"><span>${selected ? uiIcons.check + ' ADDED TO PROMPT' : uiIcons.add + ' ADD TO PROMPT'}</span>${uiIcons.arrow}</span></button>`;
   }).join('')}</div></section>`).join('');
 }
 
@@ -168,8 +248,6 @@ document.querySelector('.platform-switch').addEventListener('click', (event) => 
     option.classList.toggle('active', active);
     option.setAttribute('aria-pressed', String(active));
   });
-  const note = document.querySelector('#platform-note');
-  note.textContent = activePlatform === 'chatgpt' ? 'STILL IMAGE PROMPTS' : activePlatform === 'flow' ? 'VIDEO + MOTION PROMPTS' : 'IMAGE + VIDEO PROMPTS';
   renderCommands();
 });
 document.addEventListener('keydown', (event) => {
@@ -220,13 +298,18 @@ function toggleAssistant(open) {
   panel.setAttribute('aria-hidden', String(!isOpen));
   document.querySelector('#assistant-toggle').setAttribute('aria-expanded', String(isOpen));
   document.querySelector('#assistant-fab').setAttribute('aria-expanded', String(isOpen));
-  document.querySelector('#assistant-fab').hidden = isOpen;
+  document.querySelector('#assistant-fab').hidden = isOpen || document.querySelector('#ai-page').hidden;
   if (isOpen) setTimeout(() => document.querySelector('#chat-input').focus(), 180);
 }
 
-document.querySelector('#assistant-toggle').addEventListener('click', () => toggleAssistant());
+document.querySelector('#assistant-toggle').addEventListener('click', (event) => {
+  event.preventDefault();
+  if (window.location.hash !== '#ai') window.location.hash = 'ai';
+  toggleAssistant(true);
+});
 document.querySelector('#assistant-fab').addEventListener('click', () => toggleAssistant());
 document.querySelector('#assistant-close').addEventListener('click', () => toggleAssistant(false));
+document.querySelector('#open-assistant').addEventListener('click', () => toggleAssistant(true));
 
 function addMessage(text, role) {
   const messages = document.querySelector('#chat-messages');
@@ -292,3 +375,4 @@ document.querySelector('#chat-form').addEventListener('submit', async (event) =>
 renderCategories();
 renderCommands();
 refreshPrompt();
+renderPage();

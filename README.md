@@ -1,6 +1,8 @@
 # Gran Loco Studio
 
-A prompt command library and Groq-powered creative assistant. Built with a small Node.js server and browser-native HTML, CSS, and JavaScript.
+A visual production studio site with a work portfolio, booking page, prompt command library, and Groq-powered creative assistant. Built with a small Node.js server and browser-native HTML, CSS, and JavaScript.
+
+The work page includes clearly marked sample portfolio placeholders. The booking form is a front-end preview and does not send requests; connect it to a studio inbox before accepting bookings.
 
 ## Run locally
 

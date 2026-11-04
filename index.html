@@ -4,75 +4,192 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#05080c">
-    <title>Gran Loco Studio | Prompt Atelier</title>
-    <meta name="description" content="Compose vivid image prompts and collaborate with the Gran Loco creative assistant.">
+    <title>Gran Loco Studio | Visual Production</title>
+    <meta name="description" content="Cinematic production, bold visuals, and creative technology from Gran Loco Studio.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="/app.css">
     <script src="/app.js" defer></script>
   </head>
   <body>
     <header class="topbar">
-      <a class="brand" href="#top" aria-label="Gran Loco Studio home">
+      <a class="brand" href="#work" aria-label="Gran Loco Studio home">
         <img class="brand-mark" src="/gran-loco-logo.webp" alt="">
       </a>
       <nav class="site-nav" aria-label="Main navigation">
-        <a class="nav-link active" href="#library">WORK</a>
-        <a class="nav-link" href="#category-list">SERVICES</a>
-        <button class="nav-link nav-ai" id="assistant-toggle" type="button" aria-expanded="false" aria-controls="assistant-panel">GRAN LOCO AI</button>
-        <a class="nav-link" href="#about">ABOUT</a>
+        <a class="nav-link" href="#work" data-page-link="work">WORK</a>
+        <a class="nav-link" href="#services" data-page-link="work">SERVICES</a>
+        <a class="nav-link" href="#ai" id="assistant-toggle" data-page-link="ai" aria-expanded="false" aria-controls="assistant-panel">GRAN LOCO AI</a>
+        <a class="nav-link" href="#about" data-page-link="work">ABOUT</a>
       </nav>
       <div class="topbar-right">
-        <a class="header-cta" href="#prompt-output">START A PROMPT <span aria-hidden="true">↗</span></a>
+        <a class="header-cta" href="#booking-project">START A PROJECT <span aria-hidden="true">↗</span></a>
       </div>
     </header>
 
     <main id="top">
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-photo" aria-hidden="true"></div>
-        <div class="hero-shade" aria-hidden="true"></div>
-        <div class="hero-copy">
-          <p class="eyebrow"><span class="eyebrow-rule"></span> GRAN LOCO STUDIO</p>
-          <h1 id="hero-title">VISIONS INTO<br><em>VISUALS.</em></h1>
-          <p class="hero-description">Cinematic prompts, bold visual ideas, and creative tools to bring the picture in your head to life.</p>
-          <div class="hero-actions">
-            <a class="hero-button primary" href="#library">EXPLORE THE LIBRARY <span aria-hidden="true">↗</span></a>
-            <a class="hero-button secondary" href="#prompt-output">BUILD A PROMPT</a>
+      <section class="page-view" id="work-page" aria-label="Gran Loco Studio work">
+        <section class="hero production-hero" aria-labelledby="hero-title">
+          <div class="hero-photo" aria-hidden="true"></div>
+          <div class="hero-shade" aria-hidden="true"></div>
+          <div class="hero-copy">
+            <p class="eyebrow"><span class="eyebrow-rule"></span> GRAN LOCO STUDIO · VISUAL PRODUCTION</p>
+            <h1 id="hero-title">VISIONS INTO<br><em>VISUALS.</em></h1>
+            <p class="hero-description">Cinematic production, bold visuals, and creative technology for stories that stay with you.</p>
+            <div class="hero-actions">
+              <a class="hero-button primary" href="#portfolio">EXPLORE OUR WORK <span aria-hidden="true">↗</span></a>
+              <a class="hero-button secondary" href="#booking-appointment">BOOK A PRODUCTION</a>
+            </div>
           </div>
-          <div class="hero-meta"><span><strong id="command-total">48</strong> CREATIVE COMMANDS</span><span><strong>12</strong> VISUAL FIELDS</span></div>
-        </div>
-        <div class="hero-caption"><span>01</span> FRAME YOUR NEXT IDEA</div>
+          <div class="hero-caption"><span>01</span> INDEPENDENT VISUAL PRODUCTION</div>
+        </section>
+
+        <section class="portfolio-section" id="portfolio" aria-labelledby="portfolio-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow muted">01 / SELECTED WORK</p>
+              <h2 id="portfolio-title">Stories made <span>to move.</span></h2>
+            </div>
+            <p class="section-note">A preview of the films, campaigns, and visual worlds we create.</p>
+          </div>
+          <div class="portfolio-grid">
+            <a class="portfolio-card" href="#booking-project" aria-label="Discuss a film or commercial project">
+              <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1100&q=85" alt="Cinematic city skyline at sunset" loading="lazy">
+              <span class="portfolio-overlay"></span>
+              <span class="portfolio-meta"><span>FILM &amp; COMMERCIALS</span><span class="placeholder-tag">PORTFOLIO PLACEHOLDER</span></span>
+              <span class="portfolio-title">The City Breathes <span aria-hidden="true">↗</span></span>
+            </a>
+            <a class="portfolio-card" href="#booking-project" aria-label="Discuss a branded content project">
+              <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1100&q=85" alt="Automotive campaign image of a car" loading="lazy">
+              <span class="portfolio-overlay"></span>
+              <span class="portfolio-meta"><span>BRANDED CONTENT</span><span class="placeholder-tag">PORTFOLIO PLACEHOLDER</span></span>
+              <span class="portfolio-title">Drive <span aria-hidden="true">↗</span></span>
+            </a>
+            <a class="portfolio-card" href="#booking-project" aria-label="Discuss a behind-the-scenes production project">
+              <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1100&q=85" alt="Film production set with a camera and crew" loading="lazy">
+              <span class="portfolio-overlay"></span>
+              <span class="portfolio-meta"><span>CREATIVE VISUALS</span><span class="placeholder-tag">PORTFOLIO PLACEHOLDER</span></span>
+              <span class="portfolio-title">Behind the Scenes <span aria-hidden="true">↗</span></span>
+            </a>
+          </div>
+        </section>
+
+        <section class="services-section" id="services" aria-labelledby="services-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow muted">02 / WHAT WE DO</p>
+              <h2 id="services-title">From first idea <span>to final frame.</span></h2>
+            </div>
+          </div>
+          <div class="service-list">
+            <article class="service-item"><span>01</span><h3>Film &amp; commercials</h3><p>Concept-led films, spots, and campaign visuals built for the big screen and the scroll.</p></article>
+            <article class="service-item"><span>02</span><h3>Branded content</h3><p>Distinctive stories and production for brands with something worth saying.</p></article>
+            <article class="service-item"><span>03</span><h3>Creative production</h3><p>Collaborative direction, image-making, and production from brief to delivery.</p></article>
+          </div>
+          <div class="work-cta">
+            <p>Have an idea in mind? Let's find the right way to make it real.</p>
+            <a class="hero-button primary" href="#booking-project">START A PROJECT <span aria-hidden="true">↗</span></a>
+          </div>
+        </section>
       </section>
 
-      <section class="workbench" id="library" aria-label="Prompt command library">
-        <aside class="rail">
-          <div class="rail-heading"><span>01 / INDEX</span><span id="category-count">12 FIELDS</span></div>
-          <nav class="category-list" id="category-list" aria-label="Command categories"></nav>
-          <div class="rail-note"><span class="note-symbol">✳</span><p>One good detail can change the whole image. Start with a feeling.</p></div>
-        </aside>
-
-        <div class="library">
-          <div class="library-head">
-            <div>
-              <p class="eyebrow muted">THE COMMAND LIBRARY</p>
-              <h2 id="library-title">Choose your ingredients<span>.</span></h2>
-              <p class="library-subtitle" id="library-subtitle">Small creative decisions. A more intentional image.</p>
-            </div>
-            <label class="search-box"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Find a detail..." aria-label="Search commands"><kbd>/</kbd></label>
-          </div>
-          <div class="library-controls">
-            <div class="platform-switch" role="group" aria-label="Filter prompts by platform">
-              <button class="platform-option active" type="button" data-platform="all" aria-pressed="true">All</button>
-              <button class="platform-option" type="button" data-platform="chatgpt" aria-pressed="false">ChatGPT</button>
-              <button class="platform-option" type="button" data-platform="flow" aria-pressed="false">Flow</button>
-            </div>
-            <span class="platform-note" id="platform-note">IMAGE + VIDEO PROMPTS</span>
-          </div>
-          <div class="filter-line"><span id="result-count">48 COMMANDS</span><span>SELECT A COMMAND TO ADD IT TO YOUR PROMPT <b>＋</b></span></div>
-          <div class="command-groups" id="command-groups"></div>
-          <p class="empty-state" id="empty-state" hidden>No commands match that search. Try another word.</p>
+      <section class="page-view booking-page" id="booking-page" aria-labelledby="booking-title" hidden>
+        <div class="booking-intro">
+          <p class="eyebrow"><span class="eyebrow-rule"></span> LET'S MAKE SOMETHING</p>
+          <h1 id="booking-title">Make room for<br><em>what's next.</em></h1>
+          <p>Choose a quick conversation or tell us about the project you're ready to make.</p>
         </div>
+        <div class="booking-layout">
+          <div class="booking-options" role="group" aria-label="Choose a booking type">
+            <button class="booking-option" type="button" data-booking-option="appointment" aria-pressed="false">
+              <span class="booking-option-index">01 / TALK IT THROUGH</span>
+              <strong>Book an appointment</strong>
+              <span>Set up a first conversation with the studio.</span>
+              <span class="booking-option-arrow" aria-hidden="true">↗</span>
+            </button>
+            <button class="booking-option" type="button" data-booking-option="project" aria-pressed="true">
+              <span class="booking-option-index">02 / MAKE IT HAPPEN</span>
+              <strong>Start a project</strong>
+              <span>Share the outline and we'll shape the next steps.</span>
+              <span class="booking-option-arrow" aria-hidden="true">↗</span>
+            </button>
+          </div>
+          <form class="booking-form" id="booking-form">
+            <p class="eyebrow muted">YOUR FIRST DETAILS</p>
+            <div class="form-row">
+              <label for="booking-name">Your name<input id="booking-name" name="name" autocomplete="name" required></label>
+              <label for="booking-email">Email address<input id="booking-email" name="email" type="email" autocomplete="email" required></label>
+            </div>
+            <div class="booking-fields" id="appointment-fields" hidden>
+              <div class="form-row">
+                <label for="appointment-date">Preferred date<input id="appointment-date" name="date" type="date"></label>
+                <label for="appointment-time">Preferred time
+                  <select id="appointment-time" name="time">
+                    <option value="">Choose a time</option>
+                    <option>09:00</option><option>10:00</option><option>11:00</option>
+                    <option>13:00</option><option>14:00</option><option>15:00</option>
+                  </select>
+                </label>
+              </div>
+              <label for="appointment-note">What would you like to discuss?<textarea id="appointment-note" name="appointment-note" rows="4" placeholder="A few words about what you have in mind"></textarea></label>
+            </div>
+            <div class="booking-fields" id="project-fields">
+              <label for="project-type">What are you making?
+                <select id="project-type" name="project-type">
+                  <option value="">Choose a project type</option>
+                  <option>Film or commercial</option>
+                  <option>Branded content</option>
+                  <option>Creative production</option>
+                  <option>Something else</option>
+                </select>
+              </label>
+              <label for="project-brief">Tell us a little about it<textarea id="project-brief" name="project-brief" rows="5" placeholder="The idea, the goal, the dream shot..."></textarea></label>
+            </div>
+            <p class="booking-notice" id="booking-notice" role="status" aria-live="polite">Booking requests are a preview and aren't connected to a studio inbox yet.</p>
+            <button class="hero-button primary booking-submit" type="submit">PREVIEW REQUEST <span aria-hidden="true">↗</span></button>
+          </form>
+        </div>
+      </section>
+
+      <section class="page-view ai-page" id="ai-page" aria-label="Gran Loco AI prompt tools" hidden>
+        <section class="ai-hero">
+          <div class="ai-hero-photo" aria-hidden="true"></div>
+          <div class="ai-hero-copy">
+            <p class="eyebrow"><span class="eyebrow-rule"></span> GRAN LOCO AI</p>
+            <h1>MAKE THE<br><em>IMPOSSIBLE.</em></h1>
+            <p>Free AI tools, prompts, and workflows for creators, editors, and visual storytellers.</p>
+            <div class="ai-tools-list"><span><strong id="command-total">48</strong> COMMANDS <small>Prompt library</small></span><span>CHATGPT <small>Prompts &amp; commands</small></span><span>GOOGLE FLOW <small>AI video &amp; images</small></span><span>CREATIVE TOOLS <small>Workflows &amp; ideas</small></span></div>
+            <button class="hero-button primary" id="open-assistant" type="button">ASK GRAN LOCO AI <span aria-hidden="true">↗</span></button>
+          </div>
+        </section>
+        <section class="workbench" id="library" aria-label="Prompt command library">
+          <div class="library">
+            <div class="library-head">
+              <div>
+                <p class="eyebrow muted">01 / THE COMMAND LIBRARY</p>
+                <h2 id="library-title">Featured prompts <span>&amp; commands.</span></h2>
+                <p class="library-subtitle" id="library-subtitle">Choose a visual ingredient and add it to your prompt.</p>
+              </div>
+            </div>
+            <div class="library-controls">
+              <label class="search-box"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg><input id="search" type="search" placeholder="Search prompts, commands, details..." aria-label="Search commands"><kbd>/</kbd></label>
+              <div class="platform-switch" role="group" aria-label="Filter prompts by platform">
+                <button class="platform-option active" type="button" data-platform="all" aria-pressed="true">All</button>
+                <button class="platform-option" type="button" data-platform="chatgpt" aria-pressed="false">ChatGPT</button>
+                <button class="platform-option" type="button" data-platform="flow" aria-pressed="false">Google Flow</button>
+              </div>
+              <span class="platform-note"><i></i> FREE <small>Always. For creators.</small></span>
+            </div>
+            <div class="category-bar">
+              <span class="category-bar-label">BROWSE FIELDS <span id="category-count">12</span></span>
+              <nav class="category-list" id="category-list" aria-label="Command categories"></nav>
+            </div>
+            <div class="filter-line"><span id="result-count">48 COMMANDS</span><span>SELECT A COMMAND TO ADD IT TO YOUR PROMPT <b>＋</b></span></div>
+            <div class="command-groups" id="command-groups"></div>
+            <p class="empty-state" id="empty-state" hidden>No commands match that search. Try another word.</p>
+          </div>
+        </section>
       </section>
     </main>
 
@@ -81,7 +198,7 @@
       <p>PROGRAMMED BY <strong>OMAR HANORA</strong></p>
     </footer>
 
-    <section class="prompt-dock" aria-label="Prompt composer">
+    <section class="prompt-dock" aria-label="Prompt composer" hidden>
       <div class="dock-head">
         <div class="dock-title"><span class="dock-index">02</span><div><span class="eyebrow muted">YOUR WORKING PROMPT</span><span class="selected-count" id="selected-count">0 details selected</span></div></div>
         <div class="dock-actions"><button class="text-button" id="clear-prompt" type="button" disabled>Clear</button><button class="copy-button" id="copy-prompt" type="button" disabled><span aria-hidden="true">▣</span> Copy prompt</button></div>
@@ -90,13 +207,13 @@
       <textarea id="prompt-output" class="prompt-output" rows="2" aria-label="Composed prompt" placeholder="Your composed prompt will appear here..."></textarea>
     </section>
 
-    <aside class="assistant-panel" id="assistant-panel" aria-label="Studio assistant" aria-hidden="true">
+    <aside class="assistant-panel" id="assistant-panel" aria-label="Gran Loco AI assistant" aria-hidden="true">
       <div class="assistant-head">
-        <div class="assistant-title"><span class="assistant-mark">✳</span><div><strong>Studio assistant</strong><small>CREATIVE PARTNER · GROQ</small></div></div>
+        <div class="assistant-title"><span class="assistant-mark">✳</span><div><strong>Gran Loco AI</strong><small>CREATIVE PARTNER · GROQ</small></div></div>
         <button class="icon-button" id="assistant-close" type="button" aria-label="Close assistant">×</button>
       </div>
       <div class="chat-messages" id="chat-messages" aria-live="polite">
-        <div class="message assistant-message"><span class="message-label">STUDIO ASSISTANT</span><p>Ask what any command means, which prompts fit ChatGPT or Flow, or how to combine them into a stronger prompt.</p></div>
+        <div class="message assistant-message"><span class="message-label">GRAN LOCO AI</span><p>Ask what any command means, which prompts fit ChatGPT or Flow, or how to combine them into a stronger prompt.</p></div>
         <div class="suggestion-list" id="suggestion-list">
           <button type="button">Which commands are Flow-only?</button>
           <button type="button">Explain the lighting commands</button>
@@ -104,13 +221,13 @@
         </div>
       </div>
       <form class="chat-form" id="chat-form">
-        <label class="sr-only" for="chat-input">Message the studio assistant</label>
+        <label class="sr-only" for="chat-input">Message Gran Loco AI</label>
         <textarea id="chat-input" rows="2" placeholder="Describe the image in your head..." maxlength="4000"></textarea>
         <div class="chat-form-foot"><span>AI can make mistakes. Refine the result.</span><button type="submit" id="send-message" aria-label="Send message"><span>↑</span></button></div>
       </form>
     </aside>
-    <button class="assistant-fab" id="assistant-fab" type="button" aria-expanded="false" aria-controls="assistant-panel">
-      <span aria-hidden="true">✳</span> Ask about prompts
+    <button class="assistant-fab" id="assistant-fab" type="button" aria-expanded="false" aria-controls="assistant-panel" hidden>
+      <span aria-hidden="true">✳</span> Ask Gran Loco AI
     </button>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
   </body>
